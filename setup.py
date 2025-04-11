@@ -16,15 +16,24 @@ executables = [
     Executable("main.py", base='Win32GUI', target_name="MTR_ImageTagManager.exe")  # GUI 应用需指定 base
 ]
 
+# 设置默认安装目录
+build_exe_options = {
+    "zip_include_packages": [],
+    "include_files": data_files
+}
+
+bdist_msi_options = {
+    "upgrade_code": "{a1b2c3d4-e5f6-7890-abcd-ef1234567890}",  # 替换为你生成的 GUID
+    "initial_target_dir": r"[ProgramFilesFolder]\MTR_ImageTagManager"  # 默认安装目录
+}
+
 setup(
     name="MTR_ImageTagManager",
     version="1.0",
     description="模型训练：图像标签管理",
     options={
-        'build_exe': {
-            'include_files': data_files,
-            'zip_include_packages': [],  # 禁用包压缩
-        }
+        'build_exe': build_exe_options,
+        'bdist_msi': bdist_msi_options
     },
     executables=executables,
 )
