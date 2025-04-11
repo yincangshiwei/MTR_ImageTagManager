@@ -28,9 +28,7 @@
 
 ## 使用说明
 
-> 运行文件：dist/MTR_ImageTagManager.exe
-
-> 如需另行存放目录，需拷贝 'dist' 整个目录。
+> 运行文件：使用msi安装，执行目录里面的MTR_ImageTagManager.exe
 
 ## 相关技术
 
