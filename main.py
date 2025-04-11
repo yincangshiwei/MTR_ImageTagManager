@@ -236,6 +236,37 @@ class ImageTagManager:
         text_widget.insert(tk.END, result)
         text_widget.config(state=tk.DISABLED)
 
+    def save_tags_for_image(self, image_filename):
+        tag_file = os.path.splitext(image_filename)[0] + ".txt"
+        content = self.tag_data.get(image_filename, "")
+        if not content.strip():
+            # 如果标签为空，删除文件
+            try:
+                os.remove(os.path.join(self.image_dir, tag_file))
+            except:
+                pass
+        else:
+            # 异步保存文件
+            def batch_save():
+                with open(os.path.join(self.image_dir, tag_file), 'w', encoding='utf-8') as f:
+                    f.write(content)
+
+            threading.Thread(target=batch_save).start()
+
+    def save_individual_tag(self, image_filename):
+        tag_file = os.path.splitext(image_filename)[0] + ".txt"
+        tag_content = self.tag_data.get(image_filename, "")
+        # 使用线程保存（保持界面响应）
+        threading.Thread(
+            target=lambda: self._save_tag_file(tag_file, tag_content),
+            daemon=True
+        ).start()
+
+    def _save_tag_file(self, tag_file_path, content):
+        full_path = os.path.join(self.image_dir, tag_file_path)
+        with open(full_path, 'w', encoding='utf-8') as f:
+            f.write(content)
+
     # 批量保存优化
     def save_tags(self):
         current_image = self.image_files[self.current_image_index]
@@ -440,15 +471,29 @@ class ImageTagManager:
         self.preview_canvas.image_ref = photo
 
     def update_tag_editor(self):
+        if self.current_image_index is None or not self.image_files:
+            return  # 确保有选中的图片
+
         current_image = self.image_files[self.current_image_index]
         tags = self.tag_data.get(current_image, "")
+
+        # 更新完整编辑区域
         self.full_text.delete(1.0, tk.END)
         self.full_text.insert(tk.END, tags)
+
+        # 清除旧的标签控件
         for widget in self.tag_scrollable.winfo_children():
             widget.destroy()
+
+        # 重新创建标签管理控件
         self.create_tag_controls()
-        for tag in tags.split(','):
-            self.create_tag_widget(tag.strip())
+
+        # 按逗号分割标签并去除空值
+        tag_list = [tag.strip() for tag in tags.split(',') if tag.strip()]
+
+        # 逐个创建标签编辑组件
+        for tag in tag_list:
+            self.create_tag_widget(tag)
 
     def create_tag_controls(self):
         control_frame = ttk.Frame(self.tag_scrollable)
@@ -561,7 +606,8 @@ class ImageTagManager:
                         self.tag_data[img] = new_tag + (f",{current_tags}" if current_tags else "")
                     else:
                         self.tag_data[img] += ("," if current_tags else "") + new_tag
-                    self.save_tags()
+                    # 保存每个修改过的图片标签到文件
+                    self.save_individual_tag(img)  # 新增方法
                 win.destroy()
                 self.update_tag_editor()
 
@@ -582,7 +628,8 @@ class ImageTagManager:
                 for img in self.image_files:
                     tags = self.tag_data.get(img, "")
                     self.tag_data[img] = tags.replace(old, new)
-                    self.save_tags()
+                    # 保存每个修改过的图片标签到文件
+                    self.save_individual_tag(img)  # 新增方法
                 win.destroy()
                 self.update_tag_editor()
 
@@ -602,7 +649,8 @@ class ImageTagManager:
                 for img in self.image_files:
                     tags = [t.strip() for t in self.tag_data.get(img, "").split(',') if t.strip() != target]
                     self.tag_data[img] = ",".join(tags)
-                    self.save_tags()
+                    # 保存每个修改过的图片标签到文件
+                    self.save_individual_tag(img)  # 新增方法
                 win.destroy()
                 self.update_tag_editor()
 
