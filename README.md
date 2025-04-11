@@ -30,6 +30,14 @@
 
 > 运行文件：使用msi安装，执行目录里面的MTR_ImageTagManager.exe
 
+### 百度API获取
+
+1. 访问翻译开放平台：https://fanyi-api.baidu.com/
+2. 注册登录后查看开发者信息
+   ![image](https://github.com/user-attachments/assets/04825193-9f1f-4e5d-bdca-f7677bd96105)
+   ![image](https://github.com/user-attachments/assets/8fc24d7c-c8b1-43df-b468-71ded3074b86)
+ 
+
 ## 相关技术
 
 > Python版本：3.10.16(大于3.8都可)
