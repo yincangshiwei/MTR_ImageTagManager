@@ -30,6 +30,31 @@
 
 > 运行文件：使用msi安装，执行目录里面的MTR_ImageTagManager.exe
 
+### 核心功能
+
+#### 宫格视图-完整编辑
+![1962819791b5a9d4f2e144f1a1a73308](https://github.com/user-attachments/assets/90ba4274-0143-47b2-b052-60b5f3b64a9f)
+
+#### 宫格视图-标签管理
+![6e8afe19c516354184e3bbbe350b29b5](https://github.com/user-attachments/assets/a227d2d1-df96-48d4-89d9-84b40a060304)
+
+#### 完整编辑-翻译对照
+![image](https://github.com/user-attachments/assets/de137080-9008-4bbc-8bb6-6adfacd8dec7)
+
+#### 标签管理-翻译对照
+![image](https://github.com/user-attachments/assets/4a19344f-76d2-41bf-ad72-279da415b72b)
+
+#### 标签管理-位置移动、保存和删除
+![image](https://github.com/user-attachments/assets/00ff9829-5463-4519-aa5d-577da5a630ae)
+
+### 编辑-批量操作：批量添加、批量替换和批量删除
+![image](https://github.com/user-attachments/assets/e030bfa3-5a76-469f-a0a5-8d53a4da050c)
+
+### 设置：翻译配置和宫格配置
+![image](https://github.com/user-attachments/assets/a8ef34a9-ebf0-4d4d-9de6-f762f84f7255)
+![image](https://github.com/user-attachments/assets/c91a576b-5639-4d8c-952c-42a5a78f9fda)
+![image](https://github.com/user-attachments/assets/b830dbb2-2b3a-44a7-9056-d0119ce41cb5)
+
 ### 百度API获取
 
 1. 访问翻译开放平台：https://fanyi-api.baidu.com/
